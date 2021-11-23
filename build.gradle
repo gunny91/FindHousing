@@ -42,7 +42,7 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+     useJUnitPlatform()
 }
 
 def querydslDir = "$buildDir/generated/querydsl"
