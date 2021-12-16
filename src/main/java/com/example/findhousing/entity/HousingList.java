@@ -25,4 +25,14 @@ public class HousingList extends MainEntity{
     @Column(length = 50, nullable = false)
     private String MEMO_AUTHOR;
 
+    public void setMemoTitle(String MEMO_TITLE)
+    {
+        this.MEMO_TITLE = MEMO_TITLE;
+    }
+
+    public void setContent(String MEMO_CONTENT)
+    {
+        this.MEMO_CONTENT = MEMO_CONTENT;
+    }
+
 }

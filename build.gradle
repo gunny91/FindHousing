@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
  //   compile group: 'com.mysql.cj.jdbc.Driver', name:'mysql-connector-java'
-    compile group: 'org.thymeleaf.extract', name: 'thymeleaf-extras-java8time'
+//    compile group: 'org.thymeleaf.extract', name: 'thymeleaf-extras-java8time'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
@@ -42,29 +42,35 @@ dependencies {
     compileOnly( group: 'mysql', name: 'mysql-connector-java', version: '8.0.26')
 
     implementation 'com.querydsl:querydsl-jpa'
-   // implementation 'com.springframework.boot:spring-boot-starter-jdbc'
+//querydsl 추가
+    implementation 'com.querydsl:querydsl-apt'
 }
 
 test {
     useJUnitPlatform()
 }
 
+//def querydslDir = 'src/main/generated'
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
+    library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslDir
 }
 
-sourceSets{
-    main.java.srcDir querydslDir
-}
-
-configurations{
-    querydsl.extendsFrom compileClasspath
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslDir]
+        }
+    }
 }
 
 compileQuerydsl{
     options.annotationProcessorPath = configurations.querydsl
 }
 
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
